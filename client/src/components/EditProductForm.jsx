@@ -1,6 +1,7 @@
 import { useState ,useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from 'sweetalert2'
 function EditProductForm() {
 
 const [name, setName] = useState("");
@@ -39,12 +40,11 @@ const updateData = async () =>{
     await axios.put(`http://localhost:4001/products/${params.productId}`, 
    updateProduct
     );
-    alert(`
-      name: ${name},
-      image: ${img},
-      price: ${price},
-      description: ${description},
-    has been updated`);
+    Swal.fire({
+      title: "Good job!",
+      text: ` has been updated`,
+      icon: "success"
+    });
 
     navigate("/")
   } catch (error) {

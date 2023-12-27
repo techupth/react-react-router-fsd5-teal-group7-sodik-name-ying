@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
+
 
 function CreateProductForm() {
   const [name, setName] = useState("");
@@ -17,7 +19,34 @@ function CreateProductForm() {
         price: price,
         description: description,
       });
-      navigate("/");
+
+      await Swal.fire({
+        title: "Please check your input data",
+        text: `
+        name:${name},
+          image: ${img},
+          price: ${price},
+          description: ${description}
+          `,
+        icon: "info"
+      });
+     
+      Swal.fire({
+        title: "Do you want to save?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire("Saved!", "", "success");
+          navigate("/");
+        } else if (result.isDenied) {
+          Swal.fire("Changes are not saved", "", "info");
+        }
+      });
+      
     } catch (error) {
       console.log(error);
     }
