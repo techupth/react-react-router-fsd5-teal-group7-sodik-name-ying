@@ -1,5 +1,4 @@
 import EditProductForm from "../components/EditProductForm";
-
 function EditProductPage() {
   return (
     <div>
