@@ -8,6 +8,19 @@ function HomePage() {
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
+
+  const deleteProduct = async (id) =>{
+    try {
+      await axios.delete(`http://localhost:4001/products/${id}`);
+      const newProduct = products.filter((item)=>item.id!==id)
+      console.log(newProduct)
+     
+      setProducts(newProduct)
+    }catch(error){
+      console.log("Delete Error", error);
+    }
+  }
+
   const getProducts = async () => {
     try {
       setIsError(false);
@@ -76,7 +89,7 @@ function HomePage() {
                 </div>
               </div>
 
-              <button className="delete-button">x</button>
+              <button className="delete-button" onClick={()=>{deleteProduct(product.id)}}>x</button>
             </div>
           );
         })}

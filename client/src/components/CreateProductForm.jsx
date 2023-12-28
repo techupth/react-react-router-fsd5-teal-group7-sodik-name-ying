@@ -13,13 +13,6 @@ function CreateProductForm() {
 
   const createProduct = async () => {
     try {
-      await axios.post("http://localhost:4001/products", {
-        name: name,
-        image: img,
-        price: price,
-        description: description,
-      });
-
       await Swal.fire({
         title: "Please check your input data",
         text: `
@@ -40,7 +33,13 @@ function CreateProductForm() {
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          Swal.fire("Saved!", "", "success");
+          Swal.fire("Saved!", "", "success").then
+           axios.post("http://localhost:4001/products", {
+            name: name,
+            image: img,
+            price: price,
+            description: description,
+          });
           navigate("/");
         } else if (result.isDenied) {
           Swal.fire("Changes are not saved", "", "info");
